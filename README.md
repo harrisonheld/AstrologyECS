@@ -1,14 +1,14 @@
 # An Extremely Brief Overview of ECS
-ECS stands for Entity-Component-System. It was invented to solve the problem of wide, deep, and confusing class hierarchies in video game development. Instead of inhereting behavior from a base class, entities acquire their behavior compositionally by having components added to them.
+If you're looking into this library, I expect you already have some idea of what ECS is. For that reason, I am going to keep the overview very short. ECS stands for Entity-Component-System. It was invented to solve the problem of wide, deep, and confusing class hierarchies in video game development. Instead of inheriting behavior from a base class, entities acquire their behavior compositionally by having components added to them.
 
 ## What are Entities?
-Entities are just bags of components. Their behavior is modified by adding or removing components.
+Entities are just bags of components. They can be modified by adding or removing components.
 
 ## What are Components?
 Components are plain old data. They contain public fields so their data can be accessed.
 
 ## What are Systems?
-Systems are where behavior is implemented. There are many different systems. A system will only act on entities that have the right components. When you add or remove components from an entity, systems may choose to act on the entity or to ignore it.
+Systems are where behavior is implemented. There are many different systems. When you add or remove components from an entity, systems may choose to act on the entity or to ignore it.
 
 ## What is the EntityPool?
 In AstrologyECS, the EntityPool is a static class that holds all the Entities. It is a conveinent place to access them.
@@ -22,12 +22,10 @@ List<Entity> entities = EntityPool.GetEntities();
 ```
 # Creating New Things!
 ## Creating a New Type of Component
-Components should hold data, and only data. This means they should have no methods.
+Components should hold only data. This means they should have no methods.
 All of their properties should have public get and set accessors so their data can be manipulated.
 ```csharp
-// All components must inherit from AstrologyECS.Component
-
-// a position component with x and y coordinates.
+// Components should inherit from AstrologyECS.Component
 class Position : AstrologyECS.Component
 {
     public int X { get; set; } = 0;
@@ -40,8 +38,9 @@ class Immobile : AstrologyECS.Component { }
 ```
 
 ## Creating a new type of System
-Systems must implement the `Filter` property and the `OperateOnEntity` method. Here is a basic implementation of a wind system that blows entities in the positive X direction. It only operates on entities that have a Position component, but excludes those that have the Immobile component. Systems automatically update what entities they are interested in, so you don't need to worry about that!
+Systems must implement the `Filter` property and the `OperateOnEntity` method. Here is a basic wind system that blows entities in the positive X direction. It only operates on entities that have a Position component, but excludes those that have the Immobile component. Systems automatically update what entities they are interested in, so you don't need to worry about that!
 ```csharp
+// Systems should inherit from AstrologyECS.System
 class WindSystem : AstrologyECS.System
 {
     // This filter is used to pick and choose what kind of entities this system should operate on.
@@ -88,3 +87,6 @@ Position position2 = entity2.GetComponent<Position>();
 System.Console.WriteLine($"Entity 1: ({position1.X}, {position1.Y})");
 System.Console.WriteLine($"Entity 2: ({position2.X}, {position2.Y})");
 ```
+
+## Conclusion
+That should be all you need to get up and running with this library. The examples shown were simple, but if you want more, you need only to implement more complex systems.
