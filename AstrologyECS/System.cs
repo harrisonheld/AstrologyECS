@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AstrologyECS
 {
-    abstract class System
+    public abstract class System
     {
         // filter used to find relevant components for the System
-        protected ComponentFilter Filter { get; }
+        protected abstract ComponentFilter Filter { get; }
         private List<Entity> entities = new List<Entity>();
 
         /// <summary>
@@ -20,15 +20,24 @@ namespace AstrologyECS
             if (Filter.Match(entity))
             {
                 if (!entities.Contains(entity))
-                    entities.Add(entity);
+                    AddEntity(entity);
             }
             else // !Filter.Match(entity)
             {
-                entities.Remove(entity);
+                RemoveEntity(entity);
             }
         }
 
-        public void Run()
+        internal void AddEntity(Entity toAdd)
+        {
+            entities.Add(toAdd);
+        }
+        internal bool RemoveEntity(Entity toRemove)
+        {
+            return entities.Remove(toRemove);
+        }
+
+        internal void Run()
         {
             foreach (Entity e in entities)
                 OperateOnEntity(e);

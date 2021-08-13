@@ -14,6 +14,9 @@ namespace AstrologyECS
         // excludes entities containing ANY of these component types
         private readonly HashSet<Type> Forbidden = new HashSet<Type>();
 
+        /// <summary>
+        /// Add types of components that an entity MUST have to pass through the filter.
+        /// </summary>
         public ComponentFilter AddNecessary(params Type[] toAdd)
         {
             foreach (Type t in toAdd)
@@ -21,6 +24,9 @@ namespace AstrologyECS
 
             return this;
         }
+        /// <summary>
+        /// Add types of components that an entity MUST NOT have to pass through the filter.
+        /// </summary>
         public ComponentFilter AddForbidden(params Type[] toAdd)
         {
             foreach (Type t in toAdd)
@@ -30,8 +36,9 @@ namespace AstrologyECS
         }
 
         /// <summary>
-        /// Checks if an entity passes through this filter. Returns true if it does. Otherwise false.
+        /// Checks if an entity passes through this filter.
         /// </summary>
+        /// <returns>True if the entity passes. Otherwise false.</returns>
         public bool Match(Entity entity)
         {
             // don't match if any necessary components are missing
