@@ -9,7 +9,7 @@ Components are plain old data. They contain public fields so their data can be a
 Systems are where behavior is implemented. There are many different systems. When you add or remove components from an entity, systems may choose to act on the entity or to ignore it.
 
 ## What is the EntityPool?
-In AstrologyECS, the EntityPool is a static class that holds all the Entities. It is a convenient place to access them.
+In AstrologyECS, the `EntityPool` is a static class that holds all the entities. It is a convenient place to access them.
 ```csharp
 Entity entity = new Entity();
 EntityPool.AddEntity(entity); // add an entity
