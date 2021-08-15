@@ -1,17 +1,15 @@
 # An Extremely Brief Overview of ECS
 If you're looking into this library, I expect you already have some idea of what ECS is. For that reason, I am going to keep the overview very short. ECS stands for Entity-Component-System. It was invented to solve the problem of wide, deep, and confusing class hierarchies in video game development. Instead of inheriting behavior from a base class, entities acquire their behavior compositionally by having components added to them.
 
-## What are Entities?
+## What are Entities, Components, and Systems?
 Entities are just bags of components. They can be modified by adding or removing components.
 
-## What are Components?
 Components are plain old data. They contain public fields so their data can be accessed.
 
-## What are Systems?
 Systems are where behavior is implemented. There are many different systems. When you add or remove components from an entity, systems may choose to act on the entity or to ignore it.
 
 ## What is the EntityPool?
-In AstrologyECS, the EntityPool is a static class that holds all the Entities. It is a conveinent place to access them.
+In AstrologyECS, the EntityPool is a static class that holds all the Entities. It is a convenient place to access them.
 ```csharp
 Entity entity = new Entity();
 EntityPool.AddEntity(entity); // add an entity
